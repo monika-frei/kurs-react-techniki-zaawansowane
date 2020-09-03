@@ -1,28 +1,33 @@
-import React, { Component } from "react";
+import React from "react";
 import styles from "./ItemsList.module.scss";
 import cx from "classnames";
-import withCollapse from "../../hoc/withCollapse";
+import Collapse from "../../providers/Collapse";
 
 const items = ["Docs-1", "Docs-2", "Docs-3", "Docs-4", "Docs-5"];
 
-const ItemsList = ({ isCollapsed, toggle }) => {
-  const listClass = cx(styles.list, {
-    [styles.isCollapsed]: isCollapsed,
-  });
+const ItemsList = () => {
+  const listClass = (data) =>
+    cx(styles.list, {
+      [styles.isCollapsed]: data,
+    });
   return (
-    <div>
-      <button className="button is-dark is-large" onClick={toggle}>
-        Collapse
-      </button>
-      <ul className={listClass}>
-        {items.map((item, index) => (
-          <li className="notification is-primary" key={index}>
-            {item}
-          </li>
-        ))}
-      </ul>
-    </div>
+    <Collapse
+      render={({ isCollapsed, toggle }) => (
+        <div>
+          <button className="button is-dark is-large" onClick={toggle}>
+            Collapse
+          </button>
+          <ul className={listClass(isCollapsed)}>
+            {items.map((item, index) => (
+              <li className="notification is-primary" key={index}>
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    ></Collapse>
   );
 };
 
-export default withCollapse(ItemsList);
+export default ItemsList;
