@@ -1,45 +1,28 @@
 import React, { Component } from "react";
 import styles from "./ItemsList.module.scss";
 import cx from "classnames";
+import withCollapse from "../../hoc/withCollapse";
 
-const items = [
-  "Lorem ipsum dolor sit amet, consectetur adipiscing elit lorem ipsum dolor.",
-  "Lorem ipsum dolor sit amet, consectetur adipiscing elit lorem ipsum dolor.",
-  "Lorem ipsum dolor sit amet, consectetur adipiscing elit lorem ipsum dolor.",
-  "Lorem ipsum dolor sit amet, consectetur adipiscing elit lorem ipsum dolor.",
-  "Lorem ipsum dolor sit amet, consectetur adipiscing elit lorem ipsum dolor.",
-];
+const items = ["Docs-1", "Docs-2", "Docs-3", "Docs-4", "Docs-5"];
 
-class ItemsList extends Component {
-  state = {
-    isCollapsed: false,
-  };
-  toggle = () => {
-    this.setState((prevState) => {
-      return {
-        isCollapsed: !prevState.isCollapsed,
-      };
-    });
-  };
-  render() {
-    const listClass = cx(styles.list, {
-      [styles.isCollapsed]: this.state.isCollapsed,
-    });
-    return (
-      <div>
-        <button className="button is-dark is-large" onClick={this.toggle}>
-          Collapse
-        </button>
-        <ul className={listClass}>
-          {items.map((item, index) => (
-            <li className="notification is-primary" key={index}>
-              {item}
-            </li>
-          ))}
-        </ul>
-      </div>
-    );
-  }
-}
+const ItemsList = ({ isCollapsed, toggle }) => {
+  const listClass = cx(styles.list, {
+    [styles.isCollapsed]: isCollapsed,
+  });
+  return (
+    <div>
+      <button className="button is-dark is-large" onClick={toggle}>
+        Collapse
+      </button>
+      <ul className={listClass}>
+        {items.map((item, index) => (
+          <li className="notification is-primary" key={index}>
+            {item}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
 
-export default ItemsList;
+export default withCollapse(ItemsList);
